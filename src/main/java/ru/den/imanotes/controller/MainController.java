@@ -38,4 +38,19 @@ public class MainController {
 
         return "main";
     }
+
+    @PostMapping("filter")
+    public String filter(@RequestParam String filter, Map<String, Object> model) {
+        Iterable<Note> notes;
+
+        if(filter != null && !filter.isEmpty()){
+            notes = noteRepository.findByTag(filter);
+        } else {
+            notes = noteRepository.findAll();
+        }
+
+        model.put("notes", notes);
+
+        return "main";
+    }
 }
