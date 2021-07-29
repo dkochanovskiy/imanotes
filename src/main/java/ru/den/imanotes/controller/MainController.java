@@ -1,10 +1,12 @@
 package ru.den.imanotes.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.den.imanotes.model.Note;
+import ru.den.imanotes.model.User;
 import ru.den.imanotes.repository.NoteRepository;
 
 import java.util.Map;
@@ -32,8 +34,12 @@ public class MainController {
     }
 
     @PostMapping("main")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model){
-        Note note = new Note(text, tag);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag, Map<String, Object> model
+    ){
+        Note note = new Note(text, tag, user);
 
         noteRepository.save(note);
 

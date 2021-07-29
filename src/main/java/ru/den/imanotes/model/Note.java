@@ -1,9 +1,6 @@
 package ru.den.imanotes.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Note {
@@ -12,6 +9,24 @@ public class Note {
     private Integer id;
     private String text;
     private String tag;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    public Note(String text, String tag, User author) {
+        this.text = text;
+        this.tag = tag;
+        this.author = author;
+    }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
+    }
 
     public Note() {
     }
@@ -43,5 +58,9 @@ public class Note {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getAuthorName(){
+        return author != null ? author.getUsername() : "<none>";
     }
 }
