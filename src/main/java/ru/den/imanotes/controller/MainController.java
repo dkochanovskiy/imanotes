@@ -18,6 +18,11 @@ public class MainController {
     }
 
     @GetMapping("/")
+    public String greeting(Map<String, Object> model) {
+        return "greeting";
+    }
+
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         Iterable<Note> notes = noteRepository.findAll();
 
@@ -26,7 +31,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("main")
     public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model){
         Note note = new Note(text, tag);
 
