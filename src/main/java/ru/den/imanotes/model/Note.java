@@ -14,6 +14,8 @@ public class Note {
     @JoinColumn(name = "user_id")
     private User author;
 
+    private String filename;
+
     public Note(String text, String tag, User author) {
         this.text = text;
         this.tag = tag;
@@ -62,5 +64,13 @@ public class Note {
 
     public String getAuthorName(){
         return author != null ? author.getUsername() : "<none>";
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
