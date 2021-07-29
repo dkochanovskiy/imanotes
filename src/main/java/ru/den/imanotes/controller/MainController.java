@@ -1,6 +1,5 @@
 package ru.den.imanotes.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,7 +20,6 @@ import java.util.UUID;
 
 @Controller
 public class MainController {
-    @Autowired
     private final NoteRepository noteRepository;
 
     @Value("${upload.path}")

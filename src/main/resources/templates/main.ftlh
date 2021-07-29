@@ -1,37 +1,54 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/login.ftlh" as l>
 
 <@c.page>
-    <div>
-        <@l.logout />
-    </div>
-    <div>
-        <form method="post" enctype="multipart/form-data">
-            <input type="text" name="text" placeholder="Введите сообщение" />
-            <input type="text" name="tag" placeholder="Тэг">
-            <input type="file" name="file">
-            <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <button type="submit">Добавить</button>
-        </form>
-    </div>
-    <div>Список сообщений</div>
-    <form method="get" action="/main">
-        <input type="text" name="filter" value="${filter!}">
-        <button type="submit">Найти</button>
-    </form>
-    <#list notes as note>
-        <div>
-            <b>${note.id}</b>
-            <span>${note.text}</span>
-            <i>${note.tag}</i>
-            <strong>${note.authorName}</strong>
-            <div>
-                <#if note.filename??>
-                    <img src="/img/${note.filename}">
-                </#if>
-            </div>
+    <form method="get" action="/main" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Search by tag">
         </div>
-    <#else>
-        No notes
-    </#list>
+        <div class="col-12">
+            <button type="submit" class="btn btn-warning">Search</button>
+        </div>
+    </form>
+    <hr>
+    <form class="mt-5" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <input type="text" name="text" class="form-control" placeholder="Type your note">
+        </div>
+        <div class="mb-3">
+            <input type="text" name="tag" class="form-control" placeholder="Tag">
+        </div>
+        <div class="mb-3">
+            <input class="form-control" name="file" type="file">
+        </div>
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+        <div class="mb-5"></div>
+        <button type="submit" class="btn btn-warning">Add new note</button>
+    </form>
+    <hr>
+    <div class="mt-5">
+        <#list notes as note>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Text</th>
+                    <th scope="col">Tag</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>${note.text}</td>
+                    <td>${note.tag}</td>
+                    <td>${note.authorName}</td>
+                    <#if note.filename??>
+                        <td><img src="/img/${note.filename}"></td>
+                    </#if>
+                </tr>
+                </tbody>
+            </table>
+        <#else>
+            No note
+        </#list>
+    </div>
 </@c.page>
