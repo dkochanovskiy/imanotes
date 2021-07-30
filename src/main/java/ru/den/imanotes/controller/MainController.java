@@ -30,13 +30,13 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
+    public String greeting() {
         return "greeting";
     }
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
-        Iterable<Note> notes = noteRepository.findAll();
+        Iterable<Note> notes;
 
         if (filter != null && !filter.isEmpty()) {
             notes = noteRepository.findByTag(filter);
